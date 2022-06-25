@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 2657822868321560624}
   - component: {fileID: 2143102356589038034}
   - component: {fileID: 280534227685260152}
+  - component: {fileID: 9038474591519374484}
   - component: {fileID: 5635797372139710008}
   - component: {fileID: 2809972270896266907}
   - component: {fileID: 561945798969871901}
@@ -315,9 +316,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   health: 100
-  armor: 0
+  money: 0
   maxHealth: 100
-  maxArmor: 50
 --- !u!114 &2657822868321560624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +344,7 @@ MonoBehaviour:
   recoilX: -2
   recoilY: 2
   recoilZ: 0.35
-  snappiness: 6
+  smooth: 6
   returnSpeed: 2
 --- !u!114 &2143102356589038034
 MonoBehaviour:
@@ -373,6 +373,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7ddfc14984ab0140862c3308aa93fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &9038474591519374484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917448126024616931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11a9fd1672232c4cb99b0e194f05e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0

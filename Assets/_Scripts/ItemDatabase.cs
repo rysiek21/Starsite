@@ -19,7 +19,7 @@ public class ItemDatabase : MonoBehaviour
             bonusAmmo = 0,
             shootCooldown = 0,
             movementSpeed = 5f,
-            requireToBuild = null
+            requireToBuild = ""
         },
         new Item {
             id = 1,
@@ -30,7 +30,7 @@ public class ItemDatabase : MonoBehaviour
             bonusAmmo = 0,
             shootCooldown = 0,
             movementSpeed = 0,
-            requireToBuild = null
+            requireToBuild = ""
         },
     };
 
@@ -46,10 +46,10 @@ public class ItemDatabase : MonoBehaviour
         return items.Find(x => x.id == id);
     }
 
-    public Item GetItem(string name)
+    /*public Item GetItem(string name)
     {
         return items.Find(x => x.name == name);
-    }
+    }*/
 
     public List<Item> GetItems()
     {

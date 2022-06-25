@@ -9,15 +9,22 @@ using UnityEngine.UI;
 public class Inventory : NetworkBehaviour
 {
     ItemDatabase itemDatabase;
+    PlayerStats playerStats;
     public readonly SyncList<Item> inventory = new SyncList<Item>();
 
     private void Start()
     {
-        itemDatabase = GameObject.Find("ItemManager").GetComponent<ItemDatabase>();
+        if (!isLocalPlayer) return;
+        Setup();
         inventory.Callback += OnInventoryChanged;
     }
+    [Command]
+    void Setup()
+    {
+        playerStats = GetComponent<PlayerStats>();
+        itemDatabase = GameObject.Find("ItemManager").GetComponent<ItemDatabase>();
+    }
 
-    [TargetRpc]
     void OnInventoryChanged(SyncList<Item>.Operation op, int index, Item oldItem, Item newItem)
     {
         switch (op)
@@ -32,18 +39,32 @@ public class Inventory : NetworkBehaviour
     }
 
     [Command]
-    public void CmdAddItem(Item item)
+    public void BuyItem(int id)
     {
-        if (itemDatabase.ItemExists(item.id))
+        if (inventory.Count < 4)
         {
-            if(inventory.Count < 4)
+            if (itemDatabase.ItemExists(id))
             {
+                Item item = itemDatabase.GetItem(id);
                 if (!inventory.Contains(item))
                 {
-                    inventory.Add(item);
+                    if (playerStats.money >= item.price)
+                    {
+                        if (item.requireToBuild == "")
+                        {
+                            playerStats.money -= item.price;
+                            SrvAddItem(item);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    [Server]
+    public void SrvAddItem(Item item)
+    {
+        inventory.Add(item);
     }
 
     void GetItems()
@@ -51,19 +72,6 @@ public class Inventory : NetworkBehaviour
         foreach (Item item in inventory)
         {
             Debug.Log(item.name);
-        }
-    }
-
-    // Tests
-    
-    private void Update()
-    {
-        if (!isLocalPlayer) return;
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("Inventory");
-            CmdAddItem(itemDatabase.GetItem(0));
-            CmdAddItem(itemDatabase.GetItem(1));
         }
     }
 }

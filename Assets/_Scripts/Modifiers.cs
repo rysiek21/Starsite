@@ -17,6 +17,12 @@ public class Modifiers : NetworkBehaviour
         if (!isLocalPlayer) return;
         playerInventory = GetComponent<Inventory>();
         playerInventory.inventory.Callback += OnInventoryChanged;
+        Setup();
+    }
+    [Command]
+    void Setup()
+    {
+        playerInventory = GetComponent<Inventory>();
     }
 
     [Command]

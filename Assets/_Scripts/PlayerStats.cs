@@ -7,9 +7,11 @@ using Mirror;
 public class PlayerStats : NetworkBehaviour
 {
     TextMeshProUGUI healthText;
+    TextMeshProUGUI moneyText;
 
     [Header("Stats")]
-    [SerializeField][SyncVar(hook = nameof(HealthChanged))] private int health = 100;
+    [SerializeField][SyncVar(hook = nameof(HealthChanged))] public int health = 100;
+    [SerializeField][SyncVar(hook = nameof(MoneyChanged))] public int money = 0;
 
     [Header("Max Stats")]
     public int maxHealth = 100;
@@ -18,7 +20,9 @@ public class PlayerStats : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         healthText = GameObject.Find("HUDHealthText").GetComponent<TextMeshProUGUI>();
+        moneyText = GameObject.Find("HUDMoneyText").GetComponent<TextMeshProUGUI>();
         healthText.text = health + " HP";
+        moneyText.text = money + " $";
     }
 
     [Server]
@@ -35,6 +39,14 @@ public class PlayerStats : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H))
             Heal();
+        if (Input.GetKeyDown(KeyCode.M))
+            AddMoney();
+    }
+
+    [Command]
+    public void AddMoney()
+    {
+        money += 1000;
     }
 
     [Command]
@@ -59,5 +71,17 @@ public class PlayerStats : NetworkBehaviour
         health = newHealth;
         if (!isLocalPlayer) return;
         healthText.text = health + " HP";
+    }
+
+    void MoneyChanged(int _, int newMoney)
+    {
+        OnMoneyChanged(newMoney);
+    }
+
+    void OnMoneyChanged(int newMoney)
+    {
+        money = newMoney;
+        if (!isLocalPlayer) return;
+        moneyText.text = money + " $";
     }
 }
