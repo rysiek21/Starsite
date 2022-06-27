@@ -8,6 +8,9 @@ public class LocalPlayerSaver : NetworkBehaviour
     void Start()
     {
         if (!isLocalPlayer) return;
-        gameObject.name = "LocalPlayerObject";
+        if(gameObject.GetComponent<NetworkRoomPlayer>() == null)
+            gameObject.name = "LocalPlayerObject";
+        else
+            gameObject.name = "LocalRoomPlayerObject";
     }
 }
