@@ -44,7 +44,8 @@ public class ExampleShooting : NetworkBehaviour
         
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            CmdFire();
+            if(Cursor.lockState == CursorLockMode.Locked)
+                CmdFire();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
