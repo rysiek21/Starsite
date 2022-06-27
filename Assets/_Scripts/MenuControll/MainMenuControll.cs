@@ -34,6 +34,11 @@ public class MainMenuControll : MonoBehaviour
         }
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public void ToModeSelect()
     {
         SetActiveCanvas(modeMenu);
@@ -50,7 +55,7 @@ public class MainMenuControll : MonoBehaviour
     }
     public void ConnectToGame()
     {
-        netManager.networkAddress = serverIP.text;
+        netManager.networkAddress = serverIP.text == "" ?  "localhost" : serverIP.text;
         netManager.StartClient();
     }
 
